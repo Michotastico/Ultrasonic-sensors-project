@@ -24,8 +24,8 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-
+  estimateDistance(S1-trig, S1-echo);
+  delayMicroseconds(1000);
 }
 
 void printReadings(String label, long value){
@@ -36,18 +36,23 @@ void printReadings(String label, long value){
 /*
 Estimate the distance received from the ultrasonic sensor.
 */
-int estimateDistance(){
-  digitalWrite(trigPin,LOW);
+int estimateDistance(int trig, int echo){
+  digitalWrite(trig,LOW);
   delayMicroseconds(2);
   
-  digitalWrite(trigPin,HIGH);
+  digitalWrite(trig,HIGH);
   delayMicroseconds(10);
   
-  digitalWrite(trigPin,LOW);
-  duration = pulseIn(echoPin,HIGH);
+  digitalWrite(trig,LOW);
+  
+  //Claculate Duration of pulse.
+  duration = pulseIn(echo,HIGH);
+  printReadings("Duration", duration);
   
   //Distance in centimeters
   distance = duration/58.2;
+  printReadings("Distance", distance);
+  
   return distance;
 }
 
