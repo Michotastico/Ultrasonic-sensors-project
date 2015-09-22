@@ -12,6 +12,7 @@ Pines of the second sensor.
 
 long duration, distance;
 void setup() {
+  Serial.begin(9600);   
   /*
   Setup of the echo & trig of everysensor.
   */
@@ -24,16 +25,19 @@ void setup() {
 }
 
 void loop() {
-  printReadings("Testing",0);
+  printString("Testing");
   estimateDistance(S1trig, S1echo);
-  delayMicroseconds(1000);
+  delay(10000);
 }
 
 void printReadings(String label, long value){
   String phrase = label+": "+value;
-  Serial.print(phrase);
+  printString(phrase);
 }
-
+void printString(String phrase){
+  Serial.println(phrase);
+  Serial.println(" ");
+}
 /*
 Estimate the distance received from the ultrasonic sensor.
 */
@@ -46,7 +50,7 @@ int estimateDistance(int trig, int echo){
   
   digitalWrite(trig,LOW);
   
-  //Claculate Duration of pulse.
+  //Calculate Duration of pulse.
   duration = pulseIn(echo,HIGH);
   printReadings("Duration", duration);
   
